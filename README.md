@@ -8,12 +8,11 @@ task execution system. It provides authentication and authorization services for
 
 ## Features
 
-- Receives logs securely from Synapse clients running tasks
-- Parses and formats log data with timestamps, client IDs, and task information
-- Stores logs in a MongoDB database hosted on MongoDB Atlas Cloud
-- Offers functionalities for authorized users to:
-  - Search and filter logs based on various criteria
-  - Visualize logs
+- User authentication and authorization
+- User and Role management
+- Permission management
+- Token management
+- Token validation
 
 ## License
 

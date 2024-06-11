@@ -13,10 +13,12 @@ router.post('/signup', upload.none(), async (req, res) => {
     return res.status(400).send('Username and password are required');
   }
 
+  let client_id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+
   const hashedPassword = await bcrypt.hash(password, 10);
-  const user = new User({ username, password: hashedPassword });
+  const user = new User({ username, password: hashedPassword, client_id});
   await user.save();
-  res.sendStatus(201);
+  res.send({ client_id });
 });
 
 router.post('/login', upload.none(), async (req, res) => {

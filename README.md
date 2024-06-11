@@ -1,7 +1,7 @@
-# Synapse Logging Server 
+# Synapse AuthZ Server 
 
-This repository contains the source code for the Synapse Logging Server, a central component of the Synapse distributed 
-task execution system. It provides real-time log collection, storage, and management for tasks running on edge devices.
+This repository contains the source code for the Synapse Authentication Server, a central component of the Synapse distributed 
+task execution system. It provides authentication and authorization services for clients.
 
 [![Version](https://img.shields.io/badge/version-0.1-brightgreen.svg)](https://pypi.org/project/ad-topic-recommender/)
 [![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-blue.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/) 

@@ -27,7 +27,7 @@ router.post('/login', upload.none(), async (req, res) => {
         return res.sendStatus(401);
     }
     const token = jwt.sign({_id: user._id, client_id: user.client_id}, process.env.SECRET_KEY);
-    res.send({token});
+    res.send({token, client_id: user.client_id});
 });
 
 module.exports = router;

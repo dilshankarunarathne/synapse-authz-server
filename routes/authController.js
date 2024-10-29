@@ -42,6 +42,6 @@ router.post('/verify-token', upload.none(), async (req, res) => {
     } catch {
         res.sendStatus(401);
     }
-}
+});
 
 module.exports = router;

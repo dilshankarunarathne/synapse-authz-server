@@ -3,6 +3,7 @@ const axios = require('axios');
 const logServerUrl = 'http://localhost:3000/log';
 
 async function sendLogMessage(message) {
+  message = "[AuthZ] " + message;
   try {
     const response = await axios.post(logServerUrl, {
       message: message
@@ -16,3 +17,5 @@ async function sendLogMessage(message) {
     console.error('Error sending log message:', error);
   }
 }
+
+module.exports = sendLogMessage; 

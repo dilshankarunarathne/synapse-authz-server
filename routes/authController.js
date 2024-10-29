@@ -61,7 +61,7 @@ router.post('/verify-token', upload.none(), async (req, res) => {
             return res.sendStatus(401);
         }
 
-        sendLogMessage("Token verification successful for user: " + client_id);
+        sendLogMessage("Token verification successful for user: " + user.client_id);
         res.send({client_id: user.client_id});
     } catch (error) {
         sendLogMessage(error);

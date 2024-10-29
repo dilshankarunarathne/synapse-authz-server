@@ -6,7 +6,7 @@ const User = require('../models/User');
 const multer = require('multer');
 const upload = multer();
 
-router.post('/signup', upload.none(), async (req, res) => {
+router.post('/register', upload.none(), async (req, res) => {
     const {username, password} = req.body;
 
     if (!username || !password) {
@@ -21,7 +21,7 @@ router.post('/signup', upload.none(), async (req, res) => {
     res.send({client_id});
 });
 
-router.post('/login', upload.none(), async (req, res) => {
+router.post('/aquire-token', upload.none(), async (req, res) => {
     const user = await User.findOne({username: req.body.username});
     if (!user || !await bcrypt.compare(req.body.password, user.password)) {
         return res.sendStatus(401);
@@ -29,5 +29,19 @@ router.post('/login', upload.none(), async (req, res) => {
     const token = jwt.sign({_id: user._id, client_id: user.client_id}, process.env.SECRET_KEY);
     res.send({token, client_id: user.client_id});
 });
+
+router.post('/verify-token', upload.none(), async (req, res) => {
+    try {
+        const {token} = req.body;
+        const decoded = jwt.verify(token, process.env.SECRET_KEY);
+        const user = await User.findOne({_id: decoded._id, client_id: decoded.client_id});
+        if (!user) {
+            return res.sendStatus(401);
+        }
+        res.send({client_id: user.client_id});
+    } catch {
+        res.sendStatus(401);
+    }
+}
 
 module.exports = router;

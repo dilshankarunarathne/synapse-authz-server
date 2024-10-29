@@ -21,7 +21,7 @@ router.post('/register', upload.none(), async (req, res) => {
     res.send({client_id});
 });
 
-router.post('/aquire-token', upload.none(), async (req, res) => {
+router.post('/aqquire-token', upload.none(), async (req, res) => {
     const user = await User.findOne({username: req.body.username});
     if (!user || !await bcrypt.compare(req.body.password, user.password)) {
         return res.sendStatus(401);
@@ -32,14 +32,24 @@ router.post('/aquire-token', upload.none(), async (req, res) => {
 
 router.post('/verify-token', upload.none(), async (req, res) => {
     try {
-        const {token} = req.body;
+        const authHeader = req.headers.authorization;
+        console.log(authHeader);
+
+        if (!authHeader) {
+            return res.sendStatus(401);
+        }
+
+        const token = authHeader.split(' ')[1]; // Assuming the token is in the format "Bearer <token>"
         const decoded = jwt.verify(token, process.env.SECRET_KEY);
         const user = await User.findOne({_id: decoded._id, client_id: decoded.client_id});
+
         if (!user) {
             return res.sendStatus(401);
         }
+
         res.send({client_id: user.client_id});
-    } catch {
+    } catch (error) {
+        console.error(error);
         res.sendStatus(401);
     }
 });
